@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class CharacterClues : MonoBehaviour
 {
+
+    [SerializeField] GameObject blur;
+    [SerializeField] AudioSource audioSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +23,9 @@ public class CharacterClues : MonoBehaviour
     public void OnExit()
     {
         gameObject.SetActive(false);
+        blur.SetActive(false);
+        audioSource.Stop();
+
+
     }
 }

@@ -17,6 +17,7 @@ public class SoundController : MonoBehaviour
     public void OnMouseEnter()
     {
         soundSlide.SetActive(true);
+
     }
     public void OnMouseExit()
     {

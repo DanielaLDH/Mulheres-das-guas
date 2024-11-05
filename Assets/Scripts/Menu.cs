@@ -30,7 +30,17 @@ public class Menu : MonoBehaviour
 
     public void OnClick()
     {
-        buttonClickSound.Play();
-        soundPanel.SetActive(true);
+
+        if (soundPanel.activeSelf == true)
+        {          
+            buttonClickSound.Play();
+            soundPanel.SetActive(false);
+
+        }
+        else if (soundPanel.activeSelf == false)
+        {
+            buttonClickSound.Play();
+            soundPanel.SetActive(true);
+        }
     }
 }
