@@ -5,7 +5,7 @@ public class MemoryGameManager : MonoBehaviour
 {
     public bool[] gameDone;
     [SerializeField] int gameCountToWin;
-    [SerializeField] GameObject characterClick;
+    [SerializeField] GameObject gameIcon;
     [SerializeField] MoneyManagement moneyManagement;
 
 
@@ -22,6 +22,7 @@ public class MemoryGameManager : MonoBehaviour
         {
             Debug.Log("game is done");
             moneyManagement.AddMoney(4);
+            gameIcon.SetActive(false);
         }
         else
         {

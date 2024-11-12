@@ -9,7 +9,11 @@ public class MemoryGame : MonoBehaviour
     [SerializeField] GameObject backCard;
     [SerializeField] Sprite[] cardFaces;
 
+    [SerializeField] AudioSource sfxSound;
+
     MemoryGameManager memoryGameManager;
+    SFXManager sfxManager;
+
 
     private List<GameObject> cards = new List<GameObject>();
 
@@ -21,6 +25,8 @@ public class MemoryGame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sfxManager = sfxSound.GetComponent<SFXManager>();
+
         memoryGameManager = gameObject.GetComponent<MemoryGameManager>();
 
         List<CardData> cardList = new List<CardData>();
@@ -78,15 +84,20 @@ public class MemoryGame : MonoBehaviour
 
         if (firstCard == null)
         {
+            sfxManager.PlaySFX(sfxManager.sfx_memory_card_x);
+
             firstCard = card;
         }
         else if (secondCard == null)
         {
+            sfxManager.PlaySFX(sfxManager.sfx_memory_card_x);
             secondCard = card;
             canFlip = false;
 
             if (firstCard.idCard == secondCard.idCard) 
             {
+                sfxManager.PlaySFX(sfxManager.sfx_memory_right);
+
                 firstCard = null;
                 secondCard = null;
                 canFlip = true;
@@ -94,6 +105,8 @@ public class MemoryGame : MonoBehaviour
             }
             else
             {
+                sfxManager.PlaySFX(sfxManager.sfx_memory_wrong);
+
                 StartCoroutine(ResetCards());
             }
         }

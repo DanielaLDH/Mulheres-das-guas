@@ -7,7 +7,16 @@ public class DropSlot : MonoBehaviour, IDropHandler
 {
     [SerializeField] int codigo;
     [SerializeField] private TipsGameManager tipsGameManager;
+    [SerializeField] AudioSource sfxSound;
 
+
+    SFXManager sfxManager;
+
+    private void Start()
+    {
+        sfxManager = sfxSound.GetComponent<SFXManager>();
+
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -18,6 +27,8 @@ public class DropSlot : MonoBehaviour, IDropHandler
             if (draggedItem.codigo == codigo)
             {
                 Debug.Log("correto");
+                sfxManager.PlaySFX(sfxManager.sfx_item_right);
+
 
                 tipsGameManager.WinVerification(true);
 
@@ -37,6 +48,8 @@ public class DropSlot : MonoBehaviour, IDropHandler
             else
             {
                 draggedItem.ResetPosition();
+                sfxManager.PlaySFX(sfxManager.sfx_item_wrong);
+
             }
 
         }

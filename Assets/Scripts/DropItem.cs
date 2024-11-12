@@ -14,15 +14,21 @@ public class DropItem : MonoBehaviour
     [SerializeField] float throwDuration;
     [SerializeField] Vector2 throwOffset;
 
+    [SerializeField] AudioSource sfxSound;
+
+
     private Vector2 startPosition;
     private Vector2 endPosition;
     private float elapsedTime;
     private bool isThrowing;
+    private SFXManager sfxManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        sfxManager = sfxSound.GetComponent<SFXManager>();
+
     }
 
     // Update is called once per frame
@@ -44,6 +50,9 @@ public class DropItem : MonoBehaviour
 
     public void OnItemClicked()
     {
+        sfxManager.PlaySFX(sfxManager.sfx_item_interaction);
+
+
         startPosition = Input.mousePosition;
         endPosition = startPosition + throwOffset;
 

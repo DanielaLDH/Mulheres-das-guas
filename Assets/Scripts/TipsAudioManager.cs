@@ -12,13 +12,32 @@ public class TipsAudioManager : MonoBehaviour
     [SerializeField] private int pointsPerSinglePlay;
     [SerializeField] private MoneyManagement moneyManagement;
 
+    [SerializeField] private GameObject videoPlayer;
+
+    [SerializeField] AudioSource sfxSound;
+
+    SFXManager sfxManager;
+
+
     private int playCount = 0;
     private bool scorePoint = false;
+
+
+    private void Start()
+    {
+
+        sfxManager = sfxSound.GetComponent<SFXManager>();
+
+    }
 
     public void PlayAudio()
     {
         if (playCount < maxPlays) 
         {
+            sfxManager.PlaySFX(sfxManager.sfx_item_play);
+
+            videoPlayer.GetComponent<VideoManager>().ShowVideo();
+
             playCount++;
 
             audioSource.clip = clip;

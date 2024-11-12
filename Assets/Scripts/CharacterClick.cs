@@ -4,18 +4,22 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CharacterClick : MonoBehaviour, IPointerClickHandler
+public class CharacterClick : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
 {
     [SerializeField] GameObject CharacterMap;
     [SerializeField] GameObject blur;
     [SerializeField] Image anim;
     [SerializeField] GameObject memoryGameAbrilhante; // Referência ao MemoryGameAbrilhante
 
+    [SerializeField] AudioSource sfxSound;
+
+    SFXManager sfxManager;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        sfxManager = sfxSound.GetComponent<SFXManager>();
     }
 
     // Update is called once per frame
@@ -28,6 +32,8 @@ public class CharacterClick : MonoBehaviour, IPointerClickHandler
     {
         if (anim != null)
         {
+            sfxManager.PlaySFX(sfxManager.sfx_ui_memory_click);
+
             blur.SetActive(true);
 
             CharacterMap.gameObject.SetActive(true);
@@ -40,6 +46,8 @@ public class CharacterClick : MonoBehaviour, IPointerClickHandler
         }
         else
         {
+            sfxManager.PlaySFX(sfxManager.sfx_ui_map_click);
+
             CharacterMap.gameObject.SetActive(true);
             blur.SetActive(true);
         }
@@ -57,6 +65,14 @@ public class CharacterClick : MonoBehaviour, IPointerClickHandler
         yield return new WaitForSeconds(delay);
         anim.gameObject.SetActive(false);
         memoryGameAbrilhante.gameObject.SetActive(true);
+        sfxManager.PlaySFX(sfxManager.sfx_ui_memory_play);
 
     }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        sfxManager.PlaySFX(sfxManager.sfx_ui_map_hover);
+
+    }
+
 }

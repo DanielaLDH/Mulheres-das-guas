@@ -3,16 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Tooltip("Canvas que contém os objetos arrastáveis.")]
     [SerializeField] Canvas canvas;
+    [SerializeField] AudioSource sfxSound;
+
     public int codigo;
 
     private Vector3 startPosition;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private bool isPlacedCorrectly = false;
+    private SFXManager sfxManager;
+
+    private Vector3 originalScale;
+    public float scaleFactor = 1.1f; // Fator de aumento, por exemplo, 1.1 para 10% maior
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -20,6 +28,10 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         canvasGroup = GetComponent<CanvasGroup>();
         rectTransform = GetComponent<RectTransform>();
         startPosition = rectTransform.anchoredPosition;
+        sfxManager = sfxSound.GetComponent<SFXManager>();
+
+        originalScale = transform.localScale;
+
 
     }
 
@@ -30,6 +42,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
         canvasGroup.alpha = 0.6f; // Torna o objeto parcialmente transparente
         canvasGroup.blocksRaycasts = false; // Permite que o objeto passe por outros objetos raycast
+        sfxManager.PlaySFX(sfxManager.sfx_item_drag_x);
+
     }
 
     // Método chamado durante o arrasto
@@ -58,4 +72,15 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         isPlacedCorrectly = true;
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        //sfxManager.PlaySFX(sfxManager.sfx_ui_map_hover);
+
+      //  transform.localScale = originalScale * scaleFactor;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        //transform.localScale = originalScale;
+    }
 }

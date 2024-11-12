@@ -28,7 +28,13 @@ public class TipsGameManager : MonoBehaviour
         if (index >= gameDone.Length)
         {
             Debug.Log("game is done");
+
             mapIcon.sprite = changeIcon.sprite;
+            RectTransform rectTransform = mapIcon.GetComponent<RectTransform>();
+            rectTransform.sizeDelta = new Vector2(369.1146f, 522.0625f);
+
+
+
             moneyManagement.AddMoney(4);
 
             memoryGame.SetActive(true);
