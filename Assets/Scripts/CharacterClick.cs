@@ -11,15 +11,18 @@ public class CharacterClick : MonoBehaviour, IPointerClickHandler, IPointerEnter
     [SerializeField] Image anim;
     [SerializeField] GameObject memoryGameAbrilhante; // Referência ao MemoryGameAbrilhante
 
-    [SerializeField] AudioSource sfxSound;
+    [SerializeField] GameObject sfxSound;
+    [SerializeField] GameObject musicSound;
 
     SFXManager sfxManager;
+    MusicManager musicManager;
 
 
     // Start is called before the first frame update
     void Start()
     {
         sfxManager = sfxSound.GetComponent<SFXManager>();
+        musicManager = musicSound.GetComponent<MusicManager>();
     }
 
     // Update is called once per frame
@@ -40,7 +43,7 @@ public class CharacterClick : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
             anim.gameObject.SetActive(true);
             StartCoroutine(DisableAfterTime(6f)); // Inicia a Coroutine para desativar após 6 segundos
-
+            musicManager.EnterMemoryGame();
            
             
         }
@@ -50,6 +53,7 @@ public class CharacterClick : MonoBehaviour, IPointerClickHandler, IPointerEnter
 
             CharacterMap.gameObject.SetActive(true);
             blur.SetActive(true);
+            musicManager.EnterPhase();
         }
 
         

@@ -12,15 +12,17 @@ public class TipsGameManager : MonoBehaviour
     [SerializeField] CharacterClick characterClick;
     [SerializeField] MoneyManagement moneyManagement;
 
+    [SerializeField] GameObject musicSound;
 
     [SerializeField] GameObject memoryGame;
 
-
+    private MusicManager musicManager;
     private int index = 0;
 
     private void Start()
     {
         gameDone = new bool[gameCountToWin];
+        musicManager = musicSound.GetComponent<MusicManager>();
     }
 
     public void WinVerification(bool gameResult)
@@ -38,6 +40,7 @@ public class TipsGameManager : MonoBehaviour
             moneyManagement.AddMoney(4);
 
             memoryGame.SetActive(true);
+            musicManager.CompletePhase();
         }
         else
         {

@@ -7,7 +7,8 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 {
     [Tooltip("Canvas que contém os objetos arrastáveis.")]
     [SerializeField] Canvas canvas;
-    [SerializeField] AudioSource sfxSound;
+    [SerializeField] GameObject sfxSound;
+    [SerializeField] GameObject itemThrow;
 
     public int codigo;
 
@@ -16,6 +17,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     private RectTransform rectTransform;
     private bool isPlacedCorrectly = false;
     private SFXManager sfxManager;
+    private ItemThrowDrop itemThrowDrop;
 
     private Vector3 originalScale;
     public float scaleFactor = 1.1f; // Fator de aumento, por exemplo, 1.1 para 10% maior
@@ -29,6 +31,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         rectTransform = GetComponent<RectTransform>();
         startPosition = rectTransform.anchoredPosition;
         sfxManager = sfxSound.GetComponent<SFXManager>();
+        itemThrowDrop = itemThrow.GetComponent<ItemThrowDrop>();
 
         originalScale = transform.localScale;
 
@@ -70,6 +73,7 @@ public class DragDrop : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void SetAsPlaced()
     {
         isPlacedCorrectly = true;
+        itemThrowDrop.SetAsPlaced();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

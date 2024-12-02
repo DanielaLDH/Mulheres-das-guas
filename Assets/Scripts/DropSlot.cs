@@ -7,7 +7,7 @@ public class DropSlot : MonoBehaviour, IDropHandler
 {
     [SerializeField] int codigo;
     [SerializeField] private TipsGameManager tipsGameManager;
-    [SerializeField] AudioSource sfxSound;
+    [SerializeField] GameObject sfxSound;
 
 
     SFXManager sfxManager;

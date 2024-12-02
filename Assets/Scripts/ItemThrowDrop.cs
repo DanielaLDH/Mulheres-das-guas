@@ -4,31 +4,45 @@ using UnityEngine.UI;
 
 public class ItemThrowDrop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] AudioSource sfxSound;
+    [SerializeField] GameObject sfxSound;
 
     public Image dropImage; // A imagem de UI que será "jogada"
     public float throwSpeed = 500f; // Velocidade inicial do arremesso
     public Vector2 throwDirection = new Vector2(1, 1); // Direção inicial do arremesso
     public float gravity = 800f; // Força gravitacional que faz o item cair
+     
 
     private Vector2 velocity;
     private bool isThrowing;
     private SFXManager sfxManager;
+    private Animator hoverAnim;
 
+    private bool isPlacedCorrectly;
     private Vector3 originalScale;
     public float scaleFactor = 1.1f; // Fator de aumento, por exemplo, 1.1 para 10% maior
 
 
     void Start()
     {
-        dropImage.gameObject.SetActive(false); // A imagem está invisível inicialmente
+        hoverAnim = GetComponent<Animator>();
+        
         sfxManager = sfxSound.GetComponent<SFXManager>();
         originalScale = transform.localScale;
+
+       //Image itemImage = GetComponent<Image>();
+      //  itemImage.alphaHitTestMinimumThreshold = 0.1f;
+
+        if (dropImage != null)
+        {
+            dropImage.gameObject.SetActive(false); // A imagem está invisível inicialmente          
+        }
 
     }
 
     public void OnItemClicked()
     {
+        if (isPlacedCorrectly) return;
+        
         sfxManager.PlaySFX(sfxManager.sfx_item_interaction);
 
         // Defina a posição inicial e ative a imagem
@@ -64,12 +78,19 @@ public class ItemThrowDrop : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     public void OnPointerEnter(PointerEventData eventData)
     {
         sfxManager.PlaySFX(sfxManager.sfx_ui_map_hover);
-
-        transform.localScale = originalScale * scaleFactor;
+        hoverAnim.SetTrigger("Entra_Hover");
+        //transform.localScale = originalScale * scaleFactor;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.localScale = originalScale;
+        hoverAnim.SetTrigger("Sai_Hover");
+
+        //transform.localScale = originalScale;
+    }
+
+    public void SetAsPlaced()
+    {
+        isPlacedCorrectly = true;
     }
 }

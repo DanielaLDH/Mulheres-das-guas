@@ -7,34 +7,37 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     [SerializeField] int gameScene;
-    [SerializeField] GameObject soundPanel;
-    [SerializeField] AudioSource buttonClickSound;
+  
 
     [SerializeField] Sprite changeImgOnHover;
     [SerializeField] Sprite changeImgOnClick;
 
     [SerializeField] Button playButton;
 
-    SFXManager sfxManager;
-    Sprite buttonImg;
     
+
+    SFXManager sfxManager;
+
+    Sprite buttonImg;
+
+
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        soundPanel.SetActive(false);
-        sfxManager = buttonClickSound.GetComponent<SFXManager>();
+       
 
         if (playButton != null)
         {
             buttonImg = playButton.image.sprite;
 
         }
-    }
+    } 
 
 
     public void OnHover()
     {
-        sfxManager.PlaySFX(sfxManager.sfx_ui_play_hover);
+      //  sfxManager.PlaySFX(sfxManager.sfx_ui_play_hover);
         playButton.image.sprite = changeImgOnHover;
 
     }
@@ -46,25 +49,13 @@ public class Menu : MonoBehaviour
 
     public void Play()
     {
-        sfxManager.PlaySFX(sfxManager.sfx_ui_play_click);
+        //sfxManager.PlaySFX(sfxManager.sfx_ui_play_click);
         playButton.image.sprite = changeImgOnClick;
 
         SceneManager.LoadScene(gameScene);
     }
 
-    public void OnClick()
-    {
+  
+  
 
-        if (soundPanel.activeSelf == true)
-        {          
-            //sfxManager.PlaySFX(sfxManager.sfx_ui_play_click);
-            soundPanel.SetActive(false);
-
-        }
-        else if (soundPanel.activeSelf == false)
-        {
-            //sfxManager.PlaySFX(sfxManager.sfx_ui_play_click);
-            soundPanel.SetActive(true);
-        }
-    }
 }

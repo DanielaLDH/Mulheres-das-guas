@@ -4,13 +4,32 @@ using UnityEngine;
 
 public class HistoryAudioManager : MonoBehaviour
 {
-    [SerializeField] AudioSource audioSource;
-    [SerializeField] AudioClip clip;
+    [SerializeField] FalasManager falasManager;
+    [SerializeField] string audioEventPath;
+    [SerializeField] BtnLibra btnLibra;
+    [SerializeField] GameObject videoPlayer;
+    [SerializeField] GameObject legenda;
 
-    // Start is called before the first frame update
-    public void OnClick()
+
+
+
+    private void OnEnable()
     {
-        audioSource.clip = clip;
-        audioSource.Play();
+        falasManager.PlayFala(audioEventPath);
+
+        if (btnLibra.isActive)
+        {
+            videoPlayer.GetComponent<VideoManager>().ShowVideo();
+        }
+
+        legenda.SetActive(true);
+
+    }
+
+    private void OnDisable()
+    {
+        falasManager.StopCurrentFala();
+
+        gameObject.SetActive(false);
     }
 }

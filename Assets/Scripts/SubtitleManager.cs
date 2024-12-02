@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -14,14 +16,40 @@ public class SubtitleLine
 
 public class SubtitleManager : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public TMP_Text subtitleText;
+    public Text subtitleText;
+    public string audioEventPath;
     public List<SubtitleLine> subtitles;
+    private EventInstance eventInstance;
+
+
 
     private void Update()
     {
-        float currentTime = audioSource.time;
+        FalasManager falasManager = FindObjectOfType<FalasManager>();
 
+
+        if (falasManager != null)
+        {
+            eventInstance = falasManager.GetCurrentEventInstance();
+        }
+        else
+        {
+            Debug.LogError("FalasManager não encontrado!");
+        }
+        if (eventInstance.isValid())
+        {
+            int timelinePosition = 0;
+            eventInstance.getTimelinePosition(out timelinePosition);
+
+            float currentTime = timelinePosition / 1000f; // Converte milissegundos para segundos
+            UpdateSubtitle(currentTime);
+
+        }
+        
+    }
+
+    private void UpdateSubtitle(float currentTime)
+    {
         foreach (var line in subtitles)
         {
             if (currentTime >= line.startTime && currentTime <= line.endTime)
@@ -32,6 +60,18 @@ public class SubtitleManager : MonoBehaviour
         }
 
         subtitleText.text = string.Empty;
+
+
+    }
+
+
+    private void OnDestroy()
+    {
+        if (eventInstance.isValid())
+        {
+            eventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            eventInstance.release();
+        }
     }
 
 }

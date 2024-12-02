@@ -9,7 +9,7 @@ public class MemoryGame : MonoBehaviour
     [SerializeField] GameObject backCard;
     [SerializeField] Sprite[] cardFaces;
 
-    [SerializeField] AudioSource sfxSound;
+    [SerializeField] GameObject sfxSound;
 
     MemoryGameManager memoryGameManager;
     SFXManager sfxManager;
