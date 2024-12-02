@@ -51,6 +51,12 @@ ExportedObj/
 *.opendb
 *.VC.db
 
+# Ignore pasta Audio
+/Audio/
+
+# Ignore pasta StreamingAssets
+/StreamingAssets/
+
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
